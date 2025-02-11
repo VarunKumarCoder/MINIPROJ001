@@ -26,6 +26,7 @@ public class TravelPlanMgmtServiceImpl implements ITravelplanMgmtService {
 	@Autowired
 	public TravelPlanMgmtServiceImpl(AppConfigProperties props) {
 		messages=props.getMessages();
+		System.out.println("Messages:: "+messages);
 	}
 
 	@Override
