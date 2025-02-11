@@ -1,4 +1,4 @@
- package com.nt.service;
+  package com.nt.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nt.config.AppConfigProperties;
 import com.nt.entity.PlanCategory;
 import com.nt.entity.TravelPlan;
 import com.nt.repository.ITravelPlanCategoryRepository;
@@ -19,6 +20,13 @@ public class TravelPlanMgmtServiceImpl implements ITravelplanMgmtService {
 	private ITravelPlanCategoryRepository planCategoryRepo;
 	@Autowired
 	private ITravelPlanRepository travelPlanRepo;
+	
+	private Map<String, String> messages;
+	
+	@Autowired
+	public TravelPlanMgmtServiceImpl(AppConfigProperties props) {
+		messages=props.getMessages();
+	}
 
 	@Override
 	public String saveTravelPlan(TravelPlan plan) {
