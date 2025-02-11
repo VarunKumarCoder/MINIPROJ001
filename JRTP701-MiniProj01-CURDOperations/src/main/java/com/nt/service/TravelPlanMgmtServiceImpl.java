@@ -35,7 +35,8 @@ public class TravelPlanMgmtServiceImpl implements ITravelplanMgmtService {
 			return "TravelPlan is saved with the Id value of ::" + saved.getPlanid();
 		else
 			return "Problem in saving the TravelPlan";*/
-		return saved.getPlanid()!=null?"TravelPlan is saved with The ID No ::"+saved.getPlanid():"Problem in saving TourPlan";
+		//return saved.getPlanid()!=null?"TravelPlan is saved with The ID No ::"+saved.getPlanid():"Problem in saving TourPlan";
+		return saved.getPlanid()!=null?messages.get("save-success")+saved.getPlanid():messages.get("save-failure");
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class TravelPlanMgmtServiceImpl implements ITravelplanMgmtService {
 		else {
 			throw new IllegalArgumentException("Plan ID not found");
 		}*/
-		return travelPlanRepo.findById(planId).orElseThrow(()->new IllegalArgumentException("TravelPlan Not Found"));
+		return travelPlanRepo.findById(planId).orElseThrow(()->new IllegalArgumentException(messages.get("find-by-id-failure")));
 	}
 
 	@Override
@@ -73,10 +74,10 @@ public class TravelPlanMgmtServiceImpl implements ITravelplanMgmtService {
 		Optional<TravelPlan> opt=travelPlanRepo.findById(plan.getPlanid());
 		if(opt.isPresent()) {
 			 travelPlanRepo.save(plan);
-			 return plan.getPlanid()+" Is Updated";
+			 return plan.getPlanid()+messages.get("update-success");
 		}
 		else {
-			return plan.getPlanid()+" TravelPlan is not Found";
+			return plan.getPlanid()+messages.get("update-failure");
 		}
 	}
 
@@ -85,10 +86,10 @@ public class TravelPlanMgmtServiceImpl implements ITravelplanMgmtService {
 		Optional<TravelPlan> opt=travelPlanRepo.findById(planId);
 		if(opt.isPresent()) {
 			travelPlanRepo.deleteById(planId);
-			return planId+ " TravelPlan is Deleted";
+			return planId+messages.get("delete-success");
 		}
 		else {
-			return planId+" Travel Plan is not found";
+			return planId+messages.get("delete-failure");
 		}
 	}
 
@@ -99,10 +100,10 @@ public class TravelPlanMgmtServiceImpl implements ITravelplanMgmtService {
 			TravelPlan plan=opt.get();
 			plan.setActivateSW(status);
 			travelPlanRepo.save(plan);
-			return planId+" TravelPlan is updated";
+			return planId+messages.get("status-change-success");
 		}
 		else {
-			return planId+" Travel Plan is not found";
+			return planId+messages.get("status-change-failure");
 		}
 	}
 
